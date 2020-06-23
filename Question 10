@@ -1,0 +1,52 @@
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+file =open('Galaxy1 (4).txt','r')
+file.readline()
+G= 4.3 * (10**-6)
+rc=1.87
+p0=100*(10**6)
+u= 4*(math.pi)*(p0)*(rc**2) 
+
+radius=[]
+velocity=[]
+change_in_radius=[]
+change_in_velocity=[]
+mass=[]
+predicted_velocity=[]
+change_in_mass=[]
+summass=[]
+
+
+
+for line in file:
+  radius.append(float(line.split("\t")[0]))
+
+  velocity.append(float(line.split("\t")[1]))
+
+  change_in_radius.append(float(line.split("\t")[2]))
+
+  change_in_velocity.append(float(line.split("\t")[3]))
+
+  mass.append(float(line.split("\t")[4]))
+
+  predicted_velocity.append((float(G)) * (float(line.split("\t")[4])) / (float(line.split("\t")[0])) ** (1/2))
+
+  change_in_mass.append((u)*((float(line.split("\t")[0])))-(rc*(math.atan(float(line.split("\t")[0])/rc))))
+
+  summass.append((float(line.split("\t")[4]))+(float(u))*((float(line.split("\t")[0]))-(rc*(math.atan(float(line.split("\t")[0])/rc)))))
+
+
+W=np.array(radius)
+X=np.array(mass)
+Y=np.array(summass)
+Z=np.array(change_in_mass)
+
+
+plt.plot(W,X, label="Mass from visible matter")
+plt.plot(W,Y, label="Sum of visible and dark matter mass")
+plt.plot(W,Z, label="Mass from dark matter")
+plt.ylabel("Mass (Kg)")
+plt.xlabel("Radius (kpc)")
+plt.legend()
+plt.show()

@@ -1,0 +1,54 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+file =open('Galaxy2 (1).txt','r')
+file.readline()
+G= 4.3 * (10**-6)
+rc=1.87
+p0=100*(10**6)
+u= 4*(math.pi)*(p0)*(rc**2) 
+
+radius=[]
+velocity=[]
+change_in_radius=[]
+change_in_velocity=[]
+mass=[]
+predicted_velocity=[]
+change_in_mass=[]
+summass=[]
+sumvelocity=[]
+
+
+for line in file:
+  radius.append(float(line.split("\t")[0]))
+
+  velocity.append(float(line.split("\t")[1]))
+
+  change_in_radius.append(float(line.split("\t")[2]))
+
+  change_in_velocity.append(float(line.split("\t")[3]))
+
+  mass.append(float(line.split("\t")[4]))
+
+  predicted_velocity.append(((float(G)) * (float(line.split("\t")[4])) / (float(line.split("\t")[0]))) ** (1/2))
+
+  change_in_mass.append((u)*((float(line.split("\t")[0])))-(rc*(math.atan(float(line.split("\t")[0])/rc))))
+
+  summass.append((float(line.split("\t")[4]))+(float(u))*((float(line.split("\t")[0]))-(rc*(math.atan(float(line.split("\t")[0])/rc)))))
+
+
+  sumvelocity.append(np.power(((float(G)) * ((float(line.split("\t")[4]))+((u)*((float(line.split("\t")[0]))-(rc*(math.atan(float(line.split("\t")[0])/rc)))))) / (float(line.split("\t")[0]))),1/2)) 
+
+t=np.array(predicted_velocity)
+u=np.array(velocity)
+m=np.array(radius)
+n=np.array(sumvelocity)
+  
+plt.plot(m, t, label= "Measured velocity")
+plt.plot(m, u, label= "Predicted velocity")
+plt.plot(m, n, label= "Combined mass velocity")
+plt.xlabel("Radius (kpc)")
+plt.ylabel("Velocity (km/s)")
+plt.title("A graph to show velocity over radius for Galaxy 2")
+plt.legend()
+plt.show()

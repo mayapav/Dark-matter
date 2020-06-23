@@ -1,0 +1,19 @@
+import numpy as np
+import matplotlib.pyplot as plt
+x=np.array([5,10,15,20,25])
+y=np.array([0.2,0.5,0.8,1.0,1.3])
+yerr = np.array([0.05,0.05,0.05,0.05,0.05])
+line_best_fit=[]
+counter=0
+
+for i in x:
+  r=((0.05*i)**2)
+  line_best_fit.append((float(y[counter])-(r))/((yerr[counter])**2))
+ 
+
+estimate= (np.sum(line_best_fit))
+print(estimate)
+fx=0.05*x
+plt.errorbar(x,y,yerr,fmt='bo')
+plt.plot(x,fx,'r-')
+plt.show()
